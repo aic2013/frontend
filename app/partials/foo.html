@@ -1,0 +1,27 @@
+<p>selected: {{connectionType}}</p>
+
+<form class="form-inline">
+    <label class="control-label" for="connectionType">Connection Type:</label>
+    <select ng-options="c.key as c.value for c in connectionTypes" ng-model="connectionType"></select>
+</form>
+
+<table class="table table-bordered table-rounded table-striped">
+    <thead>
+        <th>ID</th>
+        <th>Screen Name</th>
+        <th>Profile Pic</th>
+        <th>Location</th>
+        <th>Followers</th>
+        <th>Friends</th>
+    </thead>
+    <tbody>
+        <tr ng-repeat="u in users">
+            <td>{{u.id}}</td>
+            <td>{{u.screen_name}}</td>
+            <td>{{u.profile_image_url}}</td>
+            <td>{{u.location}}</td>
+            <td>{{u.followers_count}}</td>
+            <td>{{u.friends_count}}</td>
+        </tr>
+    </tbody>
+</table>
