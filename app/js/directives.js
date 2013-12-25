@@ -1,0 +1,1 @@
+angular.module('aicGroup4.directives',[]);
