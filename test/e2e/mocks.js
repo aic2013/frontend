@@ -1,13 +1,31 @@
 'use strict'
 
 angular.module('aicGroup4Test',['aicGroup4', 'ngMockE2E'])
+
 /*
-.config(['$routeProvider', function ($routeProvider) {
-    $routeProvider
-        .when('/', { templateUrl: 'partials/foo.html', controller: 'TestController' })
-        .otherwise({ redirectTo: '/' });
-}])
-*/
+ * We are adding a 700 milliseconds delay to any response handled by the fake backend.
+ * (Note that the pass-through responses are also delayed)
+ * Basically we are wrapping the original $httpBackend ($delegate), with our own function,
+ * which sets a timeout before calling the actual callback with the response data.
+ */
+.config(function($provide) {
+    $provide.decorator('$httpBackend', function($delegate) {
+        var proxy = function(method, url, data, callback, headers) {
+            var interceptor = function() {
+                var _this = this,
+                    _arguments = arguments;
+                setTimeout(function() {
+                    callback.apply(_this, _arguments);
+                }, 700);
+            };
+            return $delegate.call(this, method, url, data, interceptor, headers);
+        };
+        for(var key in $delegate) {
+            proxy[key] = $delegate[key];
+        }
+        return proxy;
+    });
+})
 .run(function($httpBackend, CONFIG) {
 
     var connectionTypes = [

@@ -9,6 +9,8 @@ angular.module('aicGroup4',[
 ])
 .config(['$routeProvider', function ($routeProvider) {
     $routeProvider
-        .when('/', { templateUrl: 'partials/foo.html', controller: 'TestController' })
+        .when('/', { templateUrl: 'partials/main.html' })
+        .when('/users/topics', { templateUrl: 'partials/users/topics.html', controller: 'TopicsController' })
+        .when('/users/suggestions', { templateUrl: 'partials/users/suggestions.html', controller: 'SuggestionsController' })
         .otherwise({ redirectTo: '/' });
 }]);

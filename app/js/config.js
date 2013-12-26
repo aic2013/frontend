@@ -3,7 +3,7 @@
 var config_module = angular.module('aicGroup4.config', []),
     config_data = {
         'CONFIG': {
-            'API_URL': 'http://localhost:8080/aic'
+            'API_URL': 'https://api.aic13.mmuehlberger.com'
         }
     };
 
