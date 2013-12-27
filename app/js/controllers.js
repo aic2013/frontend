@@ -8,6 +8,7 @@ angular.module('aicGroup4.controllers',[])
         $scope.depth = 2;
         $scope.page = 1;
         $scope.warning = false;
+        $scope.users = [];
 
         $scope.updateResults = function() {
             if ($scope.topics.length > 0) {

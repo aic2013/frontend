@@ -107,7 +107,8 @@ code {
 
 /* Custom Styles
 -------------------------------------------------- */
-#form-user-topics {
+
+.user-topics-navbar {
     margin: 20px 0;
 }
 
@@ -125,4 +126,23 @@ code {
 
 .users-table tbody > tr >td {
     vertical-align: middle;
+}
+
+#loadingWidget {
+    background: #F4F4F4;
+    border-radius: 4px;
+    color: #999999;
+    display: block;
+    opacity: 0.9;
+    position: absolute;
+    left: 45%;
+    top: 40%;
+}
+
+#loadingWidget .loadingContent {
+    padding: 10px 20px;
+}
+
+#loadingWidget .fa-spinner {
+    margin-right: 5px;
 }
