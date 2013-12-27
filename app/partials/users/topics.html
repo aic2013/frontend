@@ -1,37 +1,64 @@
-<p>selected: {{queryParams.connectionType}}</p>
+<!--
+<h3>Debug Info:</h3>
+<p>topics: {{topics}}</p>
+<p>depth: {{depth}}</p>
+-->
 
-<form class="" role="form">
-    <div class="form-group">
-        <label for="connectionTypeSelect">Connection Type:</label>
-        <select class="form-control" id="connectionTypeSelect" ng-options="c.key as c.value for c in connectionTypes" ng-model="queryParams.connectionType"></select>
-    </div>
-    <div class="form-group">
-        <label for="topicInput">Topic:</label>
-        <input class="form-control" id="topicInput" />
-    </div>
-    <div class="form-group">
-        <label for="depthSelect">Depth:</label>
-        <select class="form-control" id="depthSelect" ng-options="" ng-model="queryParams.depth"></select>
+<form class="form-inline" role="form" id="form-user-topics">
+    <div class="row">
+        <!--
+        <div class="form-group">
+            <label for="connectionTypeSelect">Connection Type:</label>
+            <select class="form-control" id="connectionTypeSelect" ng-options="c.key as c.value for c in connectionTypes" ng-model="connectionType"></select>
+        </div>
+        -->
+        <div class="form-group col-md-4">
+            <label for="topicInput">Topics:</label>
+            <!--
+            <input type="text" class="form-control" id="topicInput" />
+            -->
+            <tags-input ng-model="topics" custom-class="bootstrap" placeholder="Add a topic" id="topicInput"></tags-input>
+            <span class="help-block">Press Enter to add another topic</span>
+        </div>
+        <div class="form-group col-md-1">
+            <label for="depthSelect">Depth:</label>
+            <select class="form-control" id="depthSelect" ng-options="o as o for o in depthOptions" ng-model="depth"></select>
+        </div>
+        <div class="form-group col-md-2">
+            <button id="btn-search" type="submit" class="btn btn-warning" ng-click="updateResults()"><i class="fa fa-search"></i>Find Users</button>
+        </div>
     </div>
 </form>
 
-<table class="table table-bordered table-rounded table-striped">
+<table class="table users-table">
     <thead>
+        <th></th>
         <th>ID</th>
+        <th>Name</th>
         <th>Screen Name</th>
-        <th>Profile Pic</th>
+        <th>Language</th>
         <th>Location</th>
-        <th>Followers</th>
+        <th>Favorites</th>
         <th>Friends</th>
+        <th>Followers</th>
+        <th>Status Count</th>
+        <th>Listed Count</th>
     </thead>
     <tbody>
         <tr ng-repeat="u in users">
+            <td><img src="{{u.profile_image_url}}" /></td>
             <td>{{u.id}}</td>
+            <td>{{u.name}}</td>
             <td>{{u.screen_name}}</td>
-            <td>{{u.profile_image_url}}</td>
+            <td>{{u.language}}</td>
             <td>{{u.location}}</td>
-            <td>{{u.followers_count}}</td>
-            <td>{{u.friends_count}}</td>
+            <td>{{u.favorite_count}}</td>
+            <td>{{u.friend_count}}</td>
+            <td>{{u.follower_count}}</td>
+            <td>{{u.status_count}}</td>
+            <td>{{u.listed_count}}</td>
         </tr>
     </tbody>
 </table>
+
+<div class="alert alert-info" ng-show="isWarning"><strong>We're sorry!</strong> {{warningMessage}}</div>

@@ -36,43 +36,68 @@ angular.module('aicGroup4Test',['aicGroup4', 'ngMockE2E'])
     var users = [
         {
             id: 123456,
-            screen_name: 'mawo87',
-            profile_image_url: "http:\/\/a2.twimg.com\/profile_images\/1438634086\/avatar_normal.png",
-            location: "San Francisco, CA",
-            followers_count: 21,
-            friends_count: 32
+            favorite_count: 12,
+            friend_count: 32,
+            follower_count: 18,
+            status_count: 10,
+            listed_count: 20,
+            name: "Max Mustermann",
+            screen_name: "mawo87",
+            language: "de",
+            profile_image_url: "http://a0.twimg.com/sticky/default_profile_images/default_profile_6_normal.png",
+            location: "San Francisco, CA"
         },
         {
             id: 123456,
-            screen_name: 'mawo87',
-            profile_image_url: "http:\/\/a2.twimg.com\/profile_images\/1438634086\/avatar_normal.png",
-            location: "San Francisco, CA",
-            followers_count: 21,
-            friends_count: 32
+            favorite_count: 12,
+            friend_count: 32,
+            follower_count: 18,
+            status_count: 10,
+            listed_count: 20,
+            name: "Max Mustermann",
+            screen_name: "mawo87",
+            language: "de",
+            profile_image_url: "http://a0.twimg.com/sticky/default_profile_images/default_profile_6_normal.png",
+            location: "San Francisco, CA"
         },
         {
             id: 123456,
-            screen_name: 'mawo87',
-            profile_image_url: "http:\/\/a2.twimg.com\/profile_images\/1438634086\/avatar_normal.png",
-            location: "San Francisco, CA",
-            followers_count: 21,
-            friends_count: 32
+            favorite_count: 12,
+            friend_count: 32,
+            follower_count: 18,
+            status_count: 10,
+            listed_count: 20,
+            name: "Max Mustermann",
+            screen_name: "mawo87",
+            language: "de",
+            profile_image_url: "http://a0.twimg.com/sticky/default_profile_images/default_profile_6_normal.png",
+            location: "San Francisco, CA"
         },
         {
             id: 123456,
-            screen_name: 'mawo87',
-            profile_image_url: "http:\/\/a2.twimg.com\/profile_images\/1438634086\/avatar_normal.png",
-            location: "San Francisco, CA",
-            followers_count: 21,
-            friends_count: 32
+            favorite_count: 12,
+            friend_count: 32,
+            follower_count: 18,
+            status_count: 10,
+            listed_count: 20,
+            name: "Max Mustermann",
+            screen_name: "mawo87",
+            language: "de",
+            profile_image_url: "http://a0.twimg.com/sticky/default_profile_images/default_profile_6_normal.png",
+            location: "San Francisco, CA"
         },
         {
             id: 123456,
-            screen_name: 'mawo87',
-            profile_image_url: "http:\/\/a2.twimg.com\/profile_images\/1438634086\/avatar_normal.png",
-            location: "San Francisco, CA",
-            followers_count: 21,
-            friends_count: 32
+            favorite_count: 12,
+            friend_count: 32,
+            follower_count: 18,
+            status_count: 10,
+            listed_count: 20,
+            name: "Max Mustermann",
+            screen_name: "mawo87",
+            language: "de",
+            profile_image_url: "http://a0.twimg.com/sticky/default_profile_images/default_profile_6_normal.png",
+            location: "San Francisco, CA"
         }
     ];
 
@@ -80,7 +105,10 @@ angular.module('aicGroup4Test',['aicGroup4', 'ngMockE2E'])
     $httpBackend.whenGET(CONFIG.API_URL + '/config/connection_types').respond(connectionTypes);
 
     //mock users
-    $httpBackend.whenGET(CONFIG.API_URL + '/users/suggestions').respond(users);
+    $httpBackend.whenGET(CONFIG.API_URL + '/users/topics?depth=2&page=1&topics%5B%5D=Apple').respond(users.slice(0,4));
+    $httpBackend.whenGET(CONFIG.API_URL + '/users/topics?depth=2&page=1&topics%5B%5D=Apple&topics%5B%5D=IPhone').respond(users.slice(0,3));
+    $httpBackend.whenGET(CONFIG.API_URL + '/users/topics?depth=2&page=1&topics%5B%5D=foo').respond([]);
+    $httpBackend.whenGET(CONFIG.API_URL + '/users/topics?depth=1&page=1').respond(users.slice(0,2));
 
     //don't mock the html views
     $httpBackend.whenGET(/partials\/\w+.*/).passThrough();
