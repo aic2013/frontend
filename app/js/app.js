@@ -3,10 +3,12 @@
 angular.module('aicGroup4',[
     'ngRoute',
     'ngTagsInput',
+    'uiSlider',
     'aicGroup4.config',
     'aicGroup4.controllers',
     'aicGroup4.services',
-    'aicGroup4.directives'
+    'aicGroup4.directives',
+    'ui.bootstrap.pagination'
 ])
 .constant('_START_REQUEST_', '_START_REQUEST_')
 .constant('_END_REQUEST_', '_END_REQUEST_')

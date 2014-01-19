@@ -1,6 +1,6 @@
 angular.module('aicGroup4.services', ['ngResource'])
     .factory('ConnectionTypes', ['$resource', 'CONFIG', function($resource, CONFIG) {
-        return $resource(CONFIG.API_URL + '/config/connection_types/:id', { id: '@id' });
+        return $resource(CONFIG.API_URL + '/config/connection_types.json/:id', { id: '@id' });
     }])
     /*
     .factory('Users', ['$http', 'CONFIG', function($http, CONFIG) {
@@ -19,5 +19,5 @@ angular.module('aicGroup4.services', ['ngResource'])
     }]);
     */
     .factory('Users', ['$resource', '$q', 'CONFIG', function($resource, $q, CONFIG) {
-        return $resource(CONFIG.API_URL + '/users/topics', {});
+        return $resource(CONFIG.API_URL + '/users/topics.json', {});
     }]);

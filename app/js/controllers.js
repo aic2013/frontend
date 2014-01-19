@@ -1,5 +1,11 @@
 angular.module('aicGroup4.controllers',[])
-    .controller('TopicsController', ['$scope', 'Users', function($scope, Users) {
+    .controller('NavigationController', ['$scope', '$location', function($scope, $location) {
+        $scope.isActive = function (viewLocation) {
+            var active = (viewLocation === $location.path());
+            return active;
+        };
+    }])
+    .controller('TopicsController', ['$scope', '$rootScope', 'Users', function($scope, $rootScope, Users) {
 
         $scope.depthOptions = [1, 2, 3];
 
@@ -7,8 +13,13 @@ angular.module('aicGroup4.controllers',[])
         $scope.topics = [];
         $scope.depth = 2;
         $scope.page = 1;
-        $scope.warning = false;
+        $scope.isWarning = false;
         $scope.users = [];
+
+        $scope.currentPage = 1;
+        $scope.totalPages = 2;
+
+        $scope.usersCount = 0;
 
         $scope.updateResults = function() {
             if ($scope.topics.length > 0) {
@@ -16,6 +27,20 @@ angular.module('aicGroup4.controllers',[])
                     "topics[]": $scope.topics,
                     depth: $scope.depth,
                     page: $scope.page
+                }, function(list, response){
+
+                    var totalPages = response("X-Total-Pages"),
+                        totalItems = response("X-Total"),
+                        currentPage = response("X-Page"),
+                        itemsPerPage = response("X-Per-Page");
+
+                    $scope.totalPages = totalPages;
+                    $scope.pageCount = totalPages;
+                    $scope.usersCount = totalItems;
+                    $scope.currentPage = currentPage;
+
+                    console.log(itemsPerPage, totalPages, totalItems, currentPage);
+
                 }).$promise.then(function(result) {
                         $scope.users = result;
                         if (result.length > 0) {
@@ -25,11 +50,26 @@ angular.module('aicGroup4.controllers',[])
                         }
                     },
                     function(error) {
-                        console.log("oops error");
+                        console.log("error fetching users based on topics");
                     }
                 );
             }
         };
+
+        $scope.selectPage = function (pageNo) {
+            console.log("foo");
+            console.log(pageNo);
+
+            $scope.currentPage = pageNo;
+        };
+
+        /*
+        $scope.$on('page.changed', function(event, data) {
+            console.log("page changed");
+            $scope.page = data.page;
+            $scope.updateResults();
+        });
+        */
 
         $scope.showWarning = function(message) {
             $scope.isWarning = true;
@@ -42,10 +82,47 @@ angular.module('aicGroup4.controllers',[])
 
         $scope.updateResults();
     }])
-    .controller('SuggestionsController', ['$scope', 'ConnectionTypes', function($scope, ConnectionTypes) {
+    .controller('SuggestionsController', ['$scope', 'ConnectionTypes', 'Users', function($scope, ConnectionTypes, Users) {
 
         //defaults
         $scope.connectionType =  "follows";
+        $scope.usersCount = 0;
+        $scope.users = [];
+        $scope.isWarning = false;
+        $scope.minRange = 0;
+        $scope.maxRange = 0.5;
 
         $scope.connectionTypes = ConnectionTypes.query();
+
+        $scope.showWarning = function(message) {
+            $scope.isWarning = true;
+            $scope.warningMessage = message;
+        };
+
+        $scope.hideWarning = function() {
+            $scope.isWarning = false;
+        };
+
+        $scope.updateResults = function() {
+
+            Users.query({
+                "connection_types[]": $scope.selectedConnectionTypes,
+                min_range: $scope.minRange,
+                max_range: $scope.maxRange,
+                page: $scope.page
+            }).$promise.then(function(result) {
+                    $scope.users = result;
+                    if (result.length > 0) {
+                        $scope.hideWarning();
+                    } else {
+                        $scope.showWarning("Your search did not return any results. Please try different search criteria.");
+                    }
+                },
+                function(error) {
+                    console.log("error fetching users based on suggestions");
+                }
+            );
+        };
+
+        $scope.updateResults();
     }]);

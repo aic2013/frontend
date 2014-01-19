@@ -1,6 +1,52 @@
-<!--
-<div class="form-group">
-    <label for="connectionTypeSelect">Connection Type:</label>
-    <select class="form-control" id="connectionTypeSelect" ng-options="c.key as c.value for c in connectionTypes" ng-model="connectionType"></select>
-</div>
--->
+<nav class="navbar navbar-default user-topics-navbar" role="navigation">
+    <div class="collapse navbar-collapse">
+        <form class="navbar-form" id="form-user-suggestions" role="search">
+            <div class="form-group col-md-2">
+                <label for="connectionTypeSelect">Connection Type:</label>
+                <select class="form-control" id="connectionTypeSelect" ng-options="c.key as c.value for c in connectionTypes" ng-model="connectionType"></select>
+            </div>
+
+            <div class="form-group col-md-4">
+                <label for="range">Range:</label>
+                <slider floor="0" ceiling="1" step="0.1" precision="1" ng-model-low="minRange" ng-model-high="maxRange"></slider>
+            </div>
+
+            <div class="form-group col-md-2">
+                <button id="btn-search" type="submit" class="btn btn-primary" ng-click="updateResults()"><i class="fa fa-search"></i>Find Users</button>
+            </div>
+        </form>
+    </div>
+</nav>
+
+<table class="table users-table" ng-hide="users.length == 0">
+    <thead>
+    <th></th>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Screen Name</th>
+    <th>Language</th>
+    <th>Location</th>
+    <th>Favorites</th>
+    <th>Friends</th>
+    <th>Followers</th>
+    <th>Status Count</th>
+    <th>Listed Count</th>
+    </thead>
+    <tbody>
+    <tr ng-repeat="u in users">
+        <td><img src="{{u.profile_image_url}}" /></td>
+        <td>{{u.id}}</td>
+        <td>{{u.name}}</td>
+        <td>{{u.screen_name}}</td>
+        <td>{{u.language}}</td>
+        <td>{{u.location}}</td>
+        <td>{{u.favorite_count}}</td>
+        <td>{{u.friend_count}}</td>
+        <td>{{u.follower_count}}</td>
+        <td>{{u.status_count}}</td>
+        <td>{{u.listed_count}}</td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="alert alert-info" ng-show="isWarning"><strong>We're sorry!</strong> {{warningMessage}}</div>

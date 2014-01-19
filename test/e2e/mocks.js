@@ -101,14 +101,38 @@ angular.module('aicGroup4Test',['aicGroup4', 'ngMockE2E'])
         }
     ];
 
-    //mock connection types
-    $httpBackend.whenGET(CONFIG.API_URL + '/config/connection_types').respond(connectionTypes);
+    var header = {
+        "X-Total": 12,
+        "X-Total-Pages": 3,
+        "X-Page": 1,
+        "X-Per-Page": 5
+    };
 
-    //mock users
-    $httpBackend.whenGET(CONFIG.API_URL + '/users/topics?depth=2&page=1&topics%5B%5D=Apple').respond(users.slice(0,4));
-    $httpBackend.whenGET(CONFIG.API_URL + '/users/topics?depth=2&page=1&topics%5B%5D=Apple&topics%5B%5D=IPhone').respond(users.slice(0,3));
-    $httpBackend.whenGET(CONFIG.API_URL + '/users/topics?depth=2&page=1&topics%5B%5D=foo').respond([]);
-    $httpBackend.whenGET(CONFIG.API_URL + '/users/topics?depth=1&page=1').respond(users.slice(0,2));
+    //mock connection types
+    $httpBackend.whenGET(CONFIG.API_URL + '/config/connection_types.json').respond(connectionTypes);
+
+    /*
+     * mock users
+     */
+
+    //Apple, page 1
+    $httpBackend.whenGET(CONFIG.API_URL + '/users/topics.json?depth=2&page=1&topics%5B%5D=Apple')
+        .respond(200, users, header);
+
+    //Apple, page 2
+    $httpBackend.whenGET(CONFIG.API_URL + '/users/topics.json?depth=2&page=2&topics%5B%5D=Apple')
+        .respond(200, users.slice(0, 4), angular.extend(header, { "X-Page": 2 }));
+
+    $httpBackend.whenGET(CONFIG.API_URL + '/users/topics.json?depth=2&page=1&topics%5B%5D=Apple&topics%5B%5D=IPhone')
+        .respond(users.slice(0,3));
+
+    $httpBackend.whenGET(CONFIG.API_URL + '/users/topics.json?depth=2&page=1&topics%5B%5D=foo')
+        .respond([]);
+
+    $httpBackend.whenGET(CONFIG.API_URL + '/users/topics.json?depth=1&page=1')
+        .respond(users.slice(0,2));
+
+    //$httpBackend.flush();
 
     //don't mock the html views
     $httpBackend.whenGET(/partials\/\w+.*/).passThrough();

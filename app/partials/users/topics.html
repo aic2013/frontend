@@ -4,14 +4,6 @@
 <p>depth: {{depth}}</p>
 -->
 
-<div id="loadingWidget" class="row ui-corner-all" style="padding: 0 .7em;" loading-widget >
-    <div class="loadingContent">
-        <p>
-            <i class="fa fa-spinner fa-spin"></i>Please wait while loading...
-        </p>
-    </div>
-</div>
-
 <nav class="navbar navbar-default user-topics-navbar" role="navigation">
     <div class="collapse navbar-collapse">
         <form class="navbar-form" id="form-user-topics" role="search">
@@ -61,5 +53,18 @@
         </tr>
     </tbody>
 </table>
+
+
+<!--
+<div ng-controller="PaginationImplCtrl" class="" ng-hide="users.length == 0">
+    <pagination boundary-links="true" total-items="totalItems" page="currentPage" items-per-page="itemsPerPage" class="pagination-small" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+</div>
+-->
+
+<div ng-show="totalPages > 1">
+    <pagination page="currentPage" num-pages="totalPages" max-size="5" class="" boundary-links="true" on-select-page="selectPage(page)"></pagination>
+</div>
+
+
 
 <div class="alert alert-info" ng-show="isWarning"><strong>We're sorry!</strong> {{warningMessage}}</div>
