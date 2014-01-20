@@ -116,11 +116,16 @@ code {
     margin-top: 25px;
 }
 
+#form-user-suggestions #btn-search {
+    margin-top: 15px;
+}
+
 #form-user-topics select {
     box-shadow: 0 0 0 4px #F4F4F4;
 }
 
-#form-user-topics #btn-search .fa-search {
+#form-user-topics #btn-search .fa-search,
+#form-user-suggestions #btn-search .fa-search {
     margin-right: 5px;
 }
 
@@ -147,4 +152,17 @@ code {
 #loadingWidget .fa-spinner {
     margin-right: 5px;
     font-size: 1.6em;
+}
+
+slider {
+    margin: 0;
+}
+
+slider span.bar.selection {
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #A5D24A), color-stop(1, #CDE69C));
+    background: -webkit-linear-gradient(top, #A5D24A 0, #CDE69C 100%);
+    background: -moz-linear-gradient(top, #A5D24A 0, #CDE69C 100%);
+    background: -o-linear-gradient(top, #A5D24A 0, #CDE69C 100%);
+    background: -ms-linear-gradient(top, #A5D24A 0, #CDE69C 100%);
+    background: linear-gradient(top, #A5D24A 0, #CDE69C 100%);
 }

@@ -27,7 +27,15 @@ angular.module('aicGroup4.controllers',[])
                     "topics[]": $scope.topics,
                     depth: $scope.depth,
                     page: $scope.page
-                }, function(list, response){
+                }, function(data, headers){
+
+
+                    console.log("data ", data);
+                    console.log("headers ", headers);
+                    console.log("X-Total-Pages ", headers("X-Total-Pages"));
+
+                    /*
+                    console.log(response("X-Total-Pages"));
 
                     var totalPages = response("X-Total-Pages"),
                         totalItems = response("X-Total"),
@@ -40,6 +48,7 @@ angular.module('aicGroup4.controllers',[])
                     $scope.currentPage = currentPage;
 
                     console.log(itemsPerPage, totalPages, totalItems, currentPage);
+                    */
 
                 }).$promise.then(function(result) {
                         $scope.users = result;
@@ -85,7 +94,7 @@ angular.module('aicGroup4.controllers',[])
     .controller('SuggestionsController', ['$scope', 'ConnectionTypes', 'Users', function($scope, ConnectionTypes, Users) {
 
         //defaults
-        $scope.connectionType =  "follows";
+        $scope.connectionTypeSelection = [];
         $scope.usersCount = 0;
         $scope.users = [];
         $scope.isWarning = false;
@@ -93,6 +102,16 @@ angular.module('aicGroup4.controllers',[])
         $scope.maxRange = 0.5;
 
         $scope.connectionTypes = ConnectionTypes.query();
+
+        $scope.toggleSelection = function(key) {
+            var idx = $scope.connectionTypeSelection.indexOf(key);
+
+            if (idx > -1) {
+                $scope.connectionTypeSelection.splice(idx, 1);
+            } else {
+                $scope.connectionTypeSelection.push(key);
+            }
+        };
 
         $scope.showWarning = function(message) {
             $scope.isWarning = true;
@@ -106,7 +125,7 @@ angular.module('aicGroup4.controllers',[])
         $scope.updateResults = function() {
 
             Users.query({
-                "connection_types[]": $scope.selectedConnectionTypes,
+                "connection_types[]": $scope.connectionTypeSelection,
                 min_range: $scope.minRange,
                 max_range: $scope.maxRange,
                 page: $scope.page

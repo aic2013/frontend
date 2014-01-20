@@ -1,9 +1,17 @@
+<!--
+<h3>Debug Info:</h3>
+<p>connection types: {{connectionTypeSelection}}</p>
+<p>range: {{minRange}} - {{maxRange}}</p>
+-->
+
 <nav class="navbar navbar-default user-topics-navbar" role="navigation">
     <div class="collapse navbar-collapse">
-        <form class="navbar-form" id="form-user-suggestions" role="search">
-            <div class="form-group col-md-2">
-                <label for="connectionTypeSelect">Connection Type:</label>
-                <select class="form-control" id="connectionTypeSelect" ng-options="c.key as c.value for c in connectionTypes" ng-model="connectionType"></select>
+        <form class="navbar-form clearfix" id="form-user-suggestions" role="search">
+            <div class="form-group col-md-6">
+                <label>Connection Type:</label><br/>
+                <label class="checkbox-inline" ng-repeat="c in connectionTypes">
+                    <input type="checkbox" value="c.key" ng-checked="connectionTypeSelection.indexOf(c.key) > -1" ng-click="toggleSelection(c.key)"/> {{c.value}}
+                </label>
             </div>
 
             <div class="form-group col-md-4">
