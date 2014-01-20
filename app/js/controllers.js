@@ -91,7 +91,7 @@ angular.module('aicGroup4.controllers',[])
 
         $scope.updateResults();
     }])
-    .controller('SuggestionsController', ['$scope', 'ConnectionTypes', 'Users', function($scope, ConnectionTypes, Users) {
+    .controller('SuggestionsController', ['$scope', 'ConnectionTypes', 'Suggestions', function($scope, ConnectionTypes, Suggestions) {
 
         //defaults
         $scope.connectionTypeSelection = [];
@@ -124,7 +124,7 @@ angular.module('aicGroup4.controllers',[])
 
         $scope.updateResults = function() {
 
-            Users.query({
+            Suggestions.query({
                 "connection_types[]": $scope.connectionTypeSelection,
                 min_range: $scope.minRange,
                 max_range: $scope.maxRange,

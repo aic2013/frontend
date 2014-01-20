@@ -20,4 +20,7 @@ angular.module('aicGroup4.services', ['ngResource'])
     */
     .factory('Users', ['$resource', '$q', 'CONFIG', function($resource, $q, CONFIG) {
         return $resource(CONFIG.API_URL + '/users/topics.json', {});
+    }])
+    .factory('Suggestions', ['$resource', '$q', 'CONFIG', function($resource, $q, CONFIG) {
+        return $resource(CONFIG.API_URL + '/users/suggestions.json', {});
     }]);
