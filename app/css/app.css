@@ -155,7 +155,7 @@ code {
 }
 
 slider {
-    margin: 0;
+    margin: 20px 0;
 }
 
 slider span.bar.selection {
