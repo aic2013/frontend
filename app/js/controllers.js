@@ -1,11 +1,11 @@
-angular.module('aicGroup4.controllers',[])
+angular.module('aicGroup4.controllers', [])
     .controller('NavigationController', ['$scope', '$location', function($scope, $location) {
         $scope.isActive = function (viewLocation) {
             var active = (viewLocation === $location.path());
             return active;
         };
     }])
-    .controller('TopicsController', ['$scope', '$rootScope', 'Users', function($scope, $rootScope, Users) {
+    .controller('TopicsController', ['$scope', '$rootScope', '$timeout', 'Users', function($scope, $rootScope, $timeout, Users) {
 
         $scope.depthOptions = [1, 2, 3];
 
@@ -15,10 +15,6 @@ angular.module('aicGroup4.controllers',[])
         $scope.page = 1;
         $scope.isWarning = false;
         $scope.users = [];
-
-        $scope.currentPage = 1;
-        $scope.totalPages = 2;
-
         $scope.usersCount = 0;
 
         $scope.updateResults = function() {
@@ -28,28 +24,11 @@ angular.module('aicGroup4.controllers',[])
                     depth: $scope.depth,
                     page: $scope.page
                 }, function(data, headers){
-
-
-                    console.log("data ", data);
-                    console.log("headers ", headers);
-                    console.log("X-Total-Pages ", headers("X-Total-Pages"));
-
-                    /*
-                    console.log(response("X-Total-Pages"));
-
-                    var totalPages = response("X-Total-Pages"),
-                        totalItems = response("X-Total"),
-                        currentPage = response("X-Page"),
-                        itemsPerPage = response("X-Per-Page");
-
-                    $scope.totalPages = totalPages;
-                    $scope.pageCount = totalPages;
-                    $scope.usersCount = totalItems;
-                    $scope.currentPage = currentPage;
-
-                    console.log(itemsPerPage, totalPages, totalItems, currentPage);
-                    */
-
+                    $timeout(function () {
+                        $scope.totalItems = headers("X-Total");
+                        $scope.pages = $scope.createPages(parseInt(headers("X-Total-Pages")));
+                        $scope.totalPages = parseInt(headers("X-Total-Pages"));
+                    });
                 }).$promise.then(function(result) {
                         $scope.users = result;
                         if (result.length > 0) {
@@ -65,20 +44,21 @@ angular.module('aicGroup4.controllers',[])
             }
         };
 
-        $scope.selectPage = function (pageNo) {
-            console.log("foo");
-            console.log(pageNo);
-
-            $scope.currentPage = pageNo;
+        $scope.createPages = function(pages) {
+            var page = 1,
+                result = [],
+                total = parseInt(pages);
+            while (page <= total) {
+                result.push(page);
+                page++
+            }
+            return result;
         };
 
-        /*
-        $scope.$on('page.changed', function(event, data) {
-            console.log("page changed");
-            $scope.page = data.page;
+        $scope.setPage = function(page) {
+            $scope.page = page;
             $scope.updateResults();
-        });
-        */
+        };
 
         $scope.showWarning = function(message) {
             $scope.isWarning = true;
@@ -91,7 +71,7 @@ angular.module('aicGroup4.controllers',[])
 
         $scope.updateResults();
     }])
-    .controller('SuggestionsController', ['$scope', 'ConnectionTypes', 'Suggestions', function($scope, ConnectionTypes, Suggestions) {
+    .controller('SuggestionsController', ['$scope', '$timeout', 'ConnectionTypes', 'Suggestions', function($scope, $timeout, ConnectionTypes, Suggestions) {
 
         //defaults
         $scope.connectionTypeSelection = [];
@@ -113,6 +93,22 @@ angular.module('aicGroup4.controllers',[])
             }
         };
 
+        $scope.createPages = function(pages) {
+            var page = 1,
+                result = [],
+                total = parseInt(pages);
+            while (page <= total) {
+                result.push(page);
+                page++
+            }
+            return result;
+        };
+
+        $scope.setPage = function(page) {
+            $scope.page = page;
+            $scope.updateResults();
+        };
+
         $scope.showWarning = function(message) {
             $scope.isWarning = true;
             $scope.warningMessage = message;
@@ -129,6 +125,12 @@ angular.module('aicGroup4.controllers',[])
                 min_range: $scope.minRange,
                 max_range: $scope.maxRange,
                 page: $scope.page
+            }, function(data, headers) {
+                $timeout(function () {
+                    $scope.totalItems = headers("X-Total");
+                    $scope.pages = $scope.createPages(parseInt(headers("X-Total-Pages")));
+                    $scope.totalPages = parseInt(headers("X-Total-Pages"));
+                });
             }).$promise.then(function(result) {
                     $scope.users = result;
                     if (result.length > 0) {
@@ -142,6 +144,14 @@ angular.module('aicGroup4.controllers',[])
                 }
             );
         };
+    }])
+    .controller('PaginationDemoCtrl', ['$scope', function($scope) {
+        $scope.noOfPages = 7;
+        $scope.currentPage = 4;
+        $scope.maxSize = 5;
 
-        $scope.updateResults();
+        $scope.pageChanged = function(page) {
+            $scope.callbackPage = page;
+            $scope.watchPage = newPage;
+        };
     }]);

@@ -166,3 +166,7 @@ slider span.bar.selection {
     background: -ms-linear-gradient(top, #A5D24A 0, #CDE69C 100%);
     background: linear-gradient(top, #A5D24A 0, #CDE69C 100%);
 }
+
+a {
+    cursor: pointer;
+}

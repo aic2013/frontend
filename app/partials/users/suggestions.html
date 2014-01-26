@@ -57,4 +57,12 @@
     </tbody>
 </table>
 
+<div class="pagination" data-ng-hide="users.length == 0">
+    <ul class="pagination" data-ng-hide="users.length == 0">
+        <li data-ng-class="{disabled: page == 1}" class="" data-ng-click="setPage(page - 1)"><a>&laquo;</a></li>
+        <li data-ng-class="{active: page == p}" data-ng-repeat="p in pages" data-ng-click="setPage(p)"><a>{{p}}</a></li>
+        <li data-ng-class="{disabled: page == totalPages}"><a data-ng-click="nextPage(page + 1)">&raquo;</a></li>
+    </ul>
+</div>
+
 <div class="alert alert-info" ng-show="isWarning"><strong>We're sorry!</strong> {{warningMessage}}</div>

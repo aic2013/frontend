@@ -7,8 +7,7 @@ angular.module('aicGroup4',[
     'aicGroup4.config',
     'aicGroup4.controllers',
     'aicGroup4.services',
-    'aicGroup4.directives',
-    'ui.bootstrap.pagination'
+    'aicGroup4.directives'
 ])
 .constant('_START_REQUEST_', '_START_REQUEST_')
 .constant('_END_REQUEST_', '_END_REQUEST_')
