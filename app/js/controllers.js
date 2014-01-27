@@ -13,6 +13,8 @@ angular.module('aicGroup4.controllers', [])
         $scope.topics = [];
         $scope.depth = 2;
         $scope.page = 1;
+        $scope.totalPages = 1;
+        $scope.totalItems = 0;
         $scope.isWarning = false;
         $scope.users = [];
         $scope.usersCount = 0;
@@ -75,11 +77,14 @@ angular.module('aicGroup4.controllers', [])
 
         //defaults
         $scope.connectionTypeSelection = [];
-        $scope.usersCount = 0;
-        $scope.users = [];
-        $scope.isWarning = false;
         $scope.minRange = 0;
         $scope.maxRange = 0.5;
+        $scope.page = 1;
+        $scope.totalPages = 1;
+        $scope.totalItems = 0;
+        $scope.isWarning = false;
+        $scope.usersCount = 0;
+        $scope.users = [];
 
         $scope.connectionTypes = ConnectionTypes.query();
 
