@@ -7,14 +7,14 @@ angular.module('aicGroup4.directives',[])
                 element.hide();
 
                 scope.$on(_START_REQUEST_, function () {
-                    console.log("got the request start notification, show the element");
                     // got the request start notification, show the element
+                    //console.log("got the request start notification, show the element");
                     element.show();
                 });
 
                 scope.$on(_END_REQUEST_, function () {
-                    console.log("got the request end notification, hide the element");
                     // got the request end notification, hide the element
+                    //console.log("got the request end notification, hide the element");
                     element.hide();
                 });
             }

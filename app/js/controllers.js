@@ -15,6 +15,9 @@ angular.module('aicGroup4.controllers', [])
         $scope.page = 1;
         $scope.totalPages = 1;
         $scope.totalItems = 0;
+        $scope.maxPages = 10;
+        $scope.fromPage = 0;
+        $scope.toPage = 10;
         $scope.isWarning = false;
         $scope.users = [];
         $scope.usersCount = 0;
@@ -27,9 +30,22 @@ angular.module('aicGroup4.controllers', [])
                     page: $scope.page
                 }, function(data, headers){
                     $timeout(function () {
+                        var currentPage = parseInt(headers("X-Page"));
+
+                        if (currentPage > $scope.toPage) {
+                            $scope.fromPage = $scope.toPage;
+                            $scope.toPage = $scope.fromPage + $scope.maxPages;
+                        }
+
+                        if (currentPage == $scope.fromPage) {
+                            $scope.fromPage = $scope.fromPage - $scope.maxPages;
+                            $scope.toPage = $scope.fromPage + $scope.maxPages;
+                        }
+
                         $scope.totalItems = headers("X-Total");
                         $scope.pages = $scope.createPages(parseInt(headers("X-Total-Pages")));
                         $scope.totalPages = parseInt(headers("X-Total-Pages"));
+                        $scope.currentPage = currentPage;
                     });
                 }).$promise.then(function(result) {
                         $scope.users = result;
@@ -54,7 +70,7 @@ angular.module('aicGroup4.controllers', [])
                 result.push(page);
                 page++
             }
-            return result;
+            return result.slice($scope.fromPage, $scope.toPage);
         };
 
         $scope.setPage = function(page) {
@@ -82,6 +98,9 @@ angular.module('aicGroup4.controllers', [])
         $scope.page = 1;
         $scope.totalPages = 1;
         $scope.totalItems = 0;
+        $scope.maxPages = 10;
+        $scope.fromPage = 0;
+        $scope.toPage = 10;
         $scope.isWarning = false;
         $scope.usersCount = 0;
         $scope.users = [];
@@ -106,7 +125,7 @@ angular.module('aicGroup4.controllers', [])
                 result.push(page);
                 page++
             }
-            return result;
+            return result.slice($scope.fromPage, $scope.toPage);
         };
 
         $scope.setPage = function(page) {
@@ -132,9 +151,22 @@ angular.module('aicGroup4.controllers', [])
                 page: $scope.page
             }, function(data, headers) {
                 $timeout(function () {
+                    var currentPage = parseInt(headers("X-Page"));
+
+                    if (currentPage > $scope.toPage) {
+                        $scope.fromPage = $scope.toPage;
+                        $scope.toPage = $scope.fromPage + $scope.maxPages;
+                    }
+
+                    if (currentPage == $scope.fromPage) {
+                        $scope.fromPage = $scope.fromPage - $scope.maxPages;
+                        $scope.toPage = $scope.fromPage + $scope.maxPages;
+                    }
+
                     $scope.totalItems = headers("X-Total");
                     $scope.pages = $scope.createPages(parseInt(headers("X-Total-Pages")));
                     $scope.totalPages = parseInt(headers("X-Total-Pages"));
+                    $scope.currentPage = currentPage;
                 });
             }).$promise.then(function(result) {
                     $scope.users = result;
