@@ -45,7 +45,6 @@ angular.module('aicGroup4Test',['aicGroup4', 'ngMockE2E'])
             screen_name: "mawo87",
             language: "de",
             profile_image_url: "http://a0.twimg.com/sticky/default_profile_images/default_profile_6_normal.png",
-            location: "San Francisco, CA"
         },
         {
             id: 123456,
@@ -58,7 +57,6 @@ angular.module('aicGroup4Test',['aicGroup4', 'ngMockE2E'])
             screen_name: "mawo87",
             language: "de",
             profile_image_url: "http://a0.twimg.com/sticky/default_profile_images/default_profile_6_normal.png",
-            location: "San Francisco, CA"
         },
         {
             id: 123456,
@@ -71,7 +69,6 @@ angular.module('aicGroup4Test',['aicGroup4', 'ngMockE2E'])
             screen_name: "mawo87",
             language: "de",
             profile_image_url: "http://a0.twimg.com/sticky/default_profile_images/default_profile_6_normal.png",
-            location: "San Francisco, CA"
         },
         {
             id: 123456,
@@ -84,7 +81,6 @@ angular.module('aicGroup4Test',['aicGroup4', 'ngMockE2E'])
             screen_name: "mawo87",
             language: "de",
             profile_image_url: "http://a0.twimg.com/sticky/default_profile_images/default_profile_6_normal.png",
-            location: "San Francisco, CA"
         },
         {
             id: 123456,
@@ -97,7 +93,6 @@ angular.module('aicGroup4Test',['aicGroup4', 'ngMockE2E'])
             screen_name: "mawo87",
             language: "de",
             profile_image_url: "http://a0.twimg.com/sticky/default_profile_images/default_profile_6_normal.png",
-            location: "San Francisco, CA"
         }
     ];
 
