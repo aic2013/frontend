@@ -58,7 +58,7 @@
         <li data-ng-class="{active: page == p}" data-ng-click="setPage(fromPage)" data-ng-show="toPage > maxPages"><a>...</a></li>
         <li data-ng-class="{active: page == p}" data-ng-repeat="p in pages" data-ng-click="setPage(p)"><a>{{p}}</a></li>
         <li data-ng-class="{active: page == p}" data-ng-click="setPage(toPage + 1)" data-ng-show="page + maxPages < totalPages"><a>...</a></li>
-        <li data-ng-class="{disabled: page == totalPages}"><a data-ng-click="nextPage(totalPages)">&raquo;</a></li>
+        <li data-ng-class="{disabled: page == totalPages}"><a data-ng-click="setPage(totalPages)">&raquo;</a></li>
     </ul>
 </div>
 

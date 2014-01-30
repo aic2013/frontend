@@ -57,5 +57,6 @@ angular.module('aicGroup4',[
         .when('/', { templateUrl: 'partials/main.html' })
         .when('/users/topics', { templateUrl: 'partials/users/topics.html', controller: 'TopicsController' })
         .when('/users/suggestions', { templateUrl: 'partials/users/suggestions.html', controller: 'SuggestionsController' })
+        .when('/ads', { templateUrl: 'partials/ads/ads.html', controller: 'AdsController' })
         .otherwise({ redirectTo: '/' });
 }]);

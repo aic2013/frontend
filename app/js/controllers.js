@@ -42,6 +42,17 @@ angular.module('aicGroup4.controllers', [])
                             $scope.toPage = $scope.fromPage + $scope.maxPages;
                         }
 
+                        //defaults for "jump to begin"
+                        if (currentPage == 1) {
+                            $scope.fromPage = 0;
+                            $scope.toPage = 10;
+                        }
+
+                        //"jump to end"
+                        if (currentPage == $scope.totalPages) {
+
+                        }
+
                         $scope.totalItems = headers("X-Total");
                         $scope.pages = $scope.createPages(parseInt(headers("X-Total-Pages")));
                         $scope.totalPages = parseInt(headers("X-Total-Pages"));
@@ -182,13 +193,43 @@ angular.module('aicGroup4.controllers', [])
             );
         };
     }])
-    .controller('PaginationDemoCtrl', ['$scope', function($scope) {
-        $scope.noOfPages = 7;
-        $scope.currentPage = 4;
-        $scope.maxSize = 5;
+    .controller('AdsController', ['$scope', 'Ads', function($scope, Ads) {
 
-        $scope.pageChanged = function(page) {
-            $scope.callbackPage = page;
-            $scope.watchPage = newPage;
+        $scope.user = "389010308";
+        $scope.isWarning = false;
+
+        $scope.showWarning = function(message) {
+            $scope.isWarning = true;
+            $scope.warningMessage = message;
         };
+
+        $scope.hideWarning = function() {
+            $scope.isWarning = false;
+        };
+
+        $scope.updateResults = function() {
+            Ads.get({
+                userId: $scope.user
+            }).$promise.then(function(result) {
+                $scope.ads = result;
+                    if (result.length > 0) {
+                        $scope.hideWarning();
+                    } else {
+                        $scope.showWarning("No ads available for given user.");
+                    }
+                },
+                function(error) {
+                    console.log("error fetching ads for user");
+                });
+        };
+
+        $scope.updateResults();
+
+        /*
+        $scope.ads = [
+            { id: 1, title: "Audi - It drives you", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a sem tortor. Vestibulum aliquam viverra viverra. Maecenas vitae neque risus. Etiam mi metus, porta eget ante vel, porta vestibulum elit. Ut accumsan dictum rutrum. In hac habitasse platea dictumst. Praesent dignissim nec erat et tincidunt. Curabitur ut tristique diam. Praesent sit amet magna sit amet magna dapibus aliquam et sed. ", image_url: "http://m1.behance.net/rendition/modules/18120479/disp/9c12b198d8e1a4927e48b1216ecf30dc.jpg", url: "" },
+            { id: 1, title: "The new BMW 3series", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a sem tortor. Vestibulum aliquam viverra viverra. Maecenas vitae neque risus. Etiam mi metus, porta eget ante vel, porta vestibulum elit. Ut accumsan dictum rutrum. In hac habitasse platea dictumst. Praesent dignissim nec erat et tincidunt. Curabitur ut tristique diam. Praesent sit amet magna sit amet magna dapibus aliquam et sed. ", image_url: "http://m1.behance.net/rendition/modules/18120479/disp/9c12b198d8e1a4927e48b1216ecf30dc.jpg", url: "" },
+            { id: 1, title: "Audi - It drives you", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a sem tortor. Vestibulum aliquam viverra viverra. Maecenas vitae neque risus. Etiam mi metus, porta eget ante vel, porta vestibulum elit. Ut accumsan dictum rutrum. In hac habitasse platea dictumst. Praesent dignissim nec erat et tincidunt. Curabitur ut tristique diam. Praesent sit amet magna sit amet magna dapibus aliquam et sed. ", image_url: "http://m1.behance.net/rendition/modules/18120479/disp/9c12b198d8e1a4927e48b1216ecf30dc.jpg", url: "" }
+        ]
+        */
     }]);

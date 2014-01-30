@@ -23,4 +23,7 @@ angular.module('aicGroup4.services', ['ngResource'])
     }])
     .factory('Suggestions', ['$resource', '$q', 'CONFIG', function($resource, $q, CONFIG) {
         return $resource(CONFIG.API_URL + '/users/suggestions.json', {});
+    }])
+    .factory('Ads', ['$resource', '$q', 'CONFIG', function($resource, $q, CONFIG) {
+        return $resource(CONFIG.API_URL + '/ads/:userId', {userId:'@id'});
     }]);
