@@ -195,7 +195,7 @@ angular.module('aicGroup4.controllers', [])
     }])
     .controller('AdsController', ['$scope', 'Ads', function($scope, Ads) {
 
-        $scope.user = "389010308";
+        $scope.user = "";
         $scope.isWarning = false;
 
         $scope.showWarning = function(message) {
@@ -222,8 +222,6 @@ angular.module('aicGroup4.controllers', [])
                     console.log("error fetching ads for user");
                 });
         };
-
-        $scope.updateResults();
 
         /*
         $scope.ads = [

@@ -112,7 +112,8 @@ code {
     margin: 20px 0;
 }
 
-#form-user-topics #btn-search {
+#form-user-topics #btn-search,
+#form-ads #btn-search {
     margin-top: 25px;
 }
 
