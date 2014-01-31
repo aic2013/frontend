@@ -211,8 +211,8 @@ angular.module('aicGroup4.controllers', [])
             Ads.get({
                 userId: $scope.user
             }).$promise.then(function(result) {
-                $scope.ads = result;
-                    if (result.length > 0) {
+                $scope.ads = result.ads;
+                    if (result && result.ads && result.ads.length > 0) {
                         $scope.hideWarning();
                     } else {
                         $scope.showWarning("No ads available for given user.");
