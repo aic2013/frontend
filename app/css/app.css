@@ -143,6 +143,7 @@ code {
     position: absolute;
     left: 45%;
     top: 40%;
+    z-index: 10;
 }
 
 #loadingWidget .loadingContent {
