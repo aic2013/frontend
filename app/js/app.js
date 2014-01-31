@@ -7,51 +7,18 @@ angular.module('aicGroup4',[
     'aicGroup4.config',
     'aicGroup4.controllers',
     'aicGroup4.services',
-    'aicGroup4.directives'
+    'aicGroup4.directives',
+    'ngResource'
 ])
-.constant('_START_REQUEST_', '_START_REQUEST_')
-.constant('_END_REQUEST_', '_END_REQUEST_')
-.config(['$routeProvider', '$httpProvider', '_START_REQUEST_', '_END_REQUEST_', function ($routeProvider, $httpProvider, _START_REQUEST_, _END_REQUEST_) {
-    var $http,
-        interceptor = ['$q', '$injector', function($q, $injector) {
-            var rootScope;
+.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) {
+    $httpProvider.responseInterceptors.push('myHttpInterceptor');
 
-            function success(response) {
-                // get $http via $injector because of circular dependency problem
-                $http = $http || $injector.get('$http');
-                // don't send notification until all requests are complete
-                if ($http.pendingRequests.length < 1) {
-                    // get $rootScope via $injector because of circular dependency problem
-                    rootScope = rootScope || $injector.get('$rootScope');
-                    // send a notification requests are complete
-                    rootScope.$broadcast(_END_REQUEST_);
-                }
-                return response;
-            }
+    var spinnerFunction = function spinnerFunction(data, headersGetter) {
+        $("#loadingWidget").show();
+        return data;
+    };
 
-            function error(response) {
-                // get $http via $injector because of circular dependency problem
-                $http = $http || $injector.get('$http');
-                // don't send notification until all requests are complete
-                if ($http.pendingRequests.length < 1) {
-                    // get $rootScope via $injector because of circular dependency problem
-                    rootScope = rootScope || $injector.get('$rootScope');
-                    // send a notification requests are complete
-                    rootScope.$broadcast(_END_REQUEST_);
-                }
-                return $q.reject(response);
-            }
-
-            return function (promise) {
-                // get $rootScope via $injector because of circular dependency problem
-                rootScope = rootScope || $injector.get('$rootScope');
-                // send notification a request has started
-                rootScope.$broadcast(_START_REQUEST_);
-                return promise.then(success, error);
-            }
-        }];
-
-    $httpProvider.responseInterceptors.push(interceptor);
+    $httpProvider.defaults.transformRequest.push(spinnerFunction);
 
     $routeProvider
         .when('/', { templateUrl: 'partials/main.html' })
@@ -59,4 +26,15 @@ angular.module('aicGroup4',[
         .when('/users/suggestions', { templateUrl: 'partials/users/suggestions.html', controller: 'SuggestionsController' })
         .when('/ads', { templateUrl: 'partials/ads/ads.html', controller: 'AdsController' })
         .otherwise({ redirectTo: '/' });
+}])
+.factory('myHttpInterceptor', ['$q', '$window', function ($q, $window) {
+    return function (promise) {
+        return promise.then(function (response) {
+            $("#loadingWidget").hide();
+            return response;
+        }, function (response) {
+            $("#loadingWidget").hide();
+            return $q.reject(response);
+        });
+    };
 }]);

@@ -1,4 +1,5 @@
 angular.module('aicGroup4.directives',[])
+    /*
     .directive('loadingWidget', ['_START_REQUEST_', '_END_REQUEST_', function(_START_REQUEST_, _END_REQUEST_) {
         return {
             restrict: "A",
@@ -18,5 +19,16 @@ angular.module('aicGroup4.directives',[])
                     element.hide();
                 });
             }
+        };
+    }]);
+    */
+    .directive("loader", ['$rootScope', function ($rootScope) {
+        return function ($scope, element, attrs) {
+            $scope.$on("loader_show", function () {
+                return element.show();
+            });
+            return $scope.$on("loader_hide", function () {
+                return element.hide();
+            });
         };
     }]);
